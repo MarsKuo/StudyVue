@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h4>上層可以往下傳，但是下層不能往上傳</h4>
+    <h1>{{count}}</h1>
+    <button @click="count += 1">+</button>
+    <hr>
+
+    <counter :count="count"></counter>
+  </div>
+  <hr>
+
+  <div id="app2">
+      <h4>component的data改成function就可以改變此問題</h4>
+      <h1>{{count}}</h1>
+      <button @click="count += 1">+</button>
+      <hr>
+      <counter :start="count"></counter>
+      <hr>
+    </div>
+
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        count: 10,
+      },
+      components: {
+        counter: {
+          props: ['count'],
+         
+          template:
+          `
+              <div >
+                <h1>{{count}}</h1>
+                
+                <button @click="count += 1">+</button>
+              </div>
+            `
+        }
+      }
+    });
+
+    //避免上層影響下層可使用
+    const vm2= new Vue({
+      el: '#app2',
+      data: {
+        count: 10,
+      },
+      components: {
+        counter: {
+          props: ['start'],
+          computed:{
+            countDoubled(){
+              return this.count * 2;
+            },
+          },
+          data(){
+            return {
+              count: this.start,
+            };
+          },
+          template:
+          `
+              <div >
+                <h2>{{count}}</h2>
+                <h2>乘2= {{countDoubled}}</h2>
+                <button @click="count+=1">+</button>
+              </div>
+            `
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

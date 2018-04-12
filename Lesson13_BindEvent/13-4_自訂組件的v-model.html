@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app2">
+    <my-counter v-model="outerCount"></my-counter>
+    <!-- 等同於 -->
+    <my-counter :value="outerCount" @input="val => outerCount = val"></my-counter>
+    <h1>{{outerCount}}</h1>
+  </div>
+  <script>
+    Vue.component('my-counter', {
+      props: ['value'],
+      data() {
+        return {
+          innerCount: this.value,
+        };
+      },
+      template:
+      `
+    <div>
+      <h1>{{innerCount}}</h1>
+      <button @click="innerCount+=1">+1</button>
+      <button @click="sync">sync</button>
+    </div>
+  `,
+      methods: {
+        sync() {
+          this.$emit('input', this.innerCount);
+        }
+      }
+    })
+
+    const vm2 = new Vue({
+      el: '#app2',
+      data: {
+        outerCount: 10,
+      }
+    });
+  </script>
+
+
+
+  <hr>
+
+  <div id="app">
+    <h4>v-model跟sync很類似，但是v-model多了一些彈性</h4>
+    <my-counter v-model="outerCount"></my-counter>
+    <!-- 等同於 -->
+    <my-counter :count="outerCount" @update:count="val => outerCount = val"></my-counter>
+    <h1>{{outerCount}}</h1>
+  </div>
+  <script>
+    Vue.component('my-counter', {
+      model: {
+        //不指定預設為value
+        prop: 'count',
+        //不指定預設為input
+        event: 'update:count'
+      },
+      props: ['count'],
+      data() {
+        return {
+          innerCount: this.count,
+        };
+      },
+      template:
+      `
+    <div>
+      <h1>{{innerCount}}</h1>
+      <button @click="innerCount+=1">+1</button>
+      <button @click="sync">sync</button>
+    </div>
+  `,
+      methods: {
+        sync() {
+          this.$emit('update:count', this.innerCount);
+        }
+      }
+    })
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        outerCount: 10,
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

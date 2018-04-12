@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <ol>
+      <li v-for="item in todo" :class="item">{{item}}</li>
+    </ol>
+
+    <select name="" id="">
+      <option v-for="item in months" :value="item">{{item}}</option>
+    </select>
+    <hr>
+    <!-- 特殊快速用法 -->
+    <select name="" id="">
+      <option v-for="item in 12" :value="item">{{item}}</option>
+    </select>
+    <hr>
+    <h1>英文月份</h1>
+    <select name="" id="">
+      <option v-for="item,index in Emonths" :value="index+1">{{item}}</option>
+    </select>
+  </div>
+  <script>
+    const VM = new Vue({
+      el: '#app',
+      data: {
+        todo: ['學會javaScript', '學會VUE', '投遞履歷', '年薪百萬'],
+        months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        Emonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      }
+    });
+  </script>
+</body>
+
+</html>

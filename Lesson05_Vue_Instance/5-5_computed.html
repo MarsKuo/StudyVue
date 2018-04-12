@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="text" name="" id="" v-model="a">
+    +
+    <input type="text" name="" id="" v-model="b">
+    =
+    <input type="text" name="" id="" v-model="c">
+    <span></span>
+    {{ a }}+{{b}} ={{c}}
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+          a:0,
+          b:0,
+        },
+        computed:{
+          d(){
+            return parseInt(this.a,10) + parseInt(this.b,10);
+          },
+          c:{
+              get(){
+                //預設讀這個
+                return parseInt(this.a,10) + parseInt(this.b,10);
+              },
+              set(val){
+                //當更改C的時候，同步計算
+                this.b = parseInt(val,10) - parseInt(this.a,10)
+              }
+          }
+        }
+    });
+  </script>
+</body>
+</html>

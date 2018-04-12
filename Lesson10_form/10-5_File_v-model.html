@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+  <h5> v-model無法使用在檔案上傳</h5>
+  <input type="file" @change="fileSelected">
+  <img v-if="image" :src="image" alt="" width="200"><br><hr>
+  <button @click="upload">上傳檔案</button>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        image:'',
+        file: null
+      },
+      methods: {
+        fileSelected(evt){
+          const file =evt.target.files.item(0);
+          const reader = new FileReader();
+          reader.addEventListener('load',this.imageLoaded);
+          reader.readAsDataURL(file);
+        },
+        imageLoaded(evt){
+          this.image =evt.target.result
+        },
+        fileUpload(evt){
+          this.file =evt.target.files.item(0);
+          const reader = new FileReader();
+          reader.addEventListener('load',this.imageLoaded);
+          reader.readAsDataURL(this.file);
+        },
+        upload(){
+          //傳base64
+          //axios.post('/upload',{image:this.image});
+          //傳formdata
+          const form = new FormData();
+          form.append(this.file, this.file.name);
+
+        axios.post('/upload',form);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

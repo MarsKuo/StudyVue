@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>組件命名學</h4>
+  <h5>使用模板，el掛載的話，限定使用kebab-case，使用Localcomponent不受限制</h5>
+  <h5>再template裡面可以使用selfTag，再HTML不行</h5>
+  <div id="app">
+    <Say-Hello></Say-Hello>
+
+  </div>
+
+
+  <script>
+    // 'my-first-component'  //kebab-case 串烤
+    // 'myFirstComponent'   //camelCase 駝峰式
+    // 'MyFirstComponent'   //PascalCase 頭文字大寫
+
+
+
+    Vue.component('SayHello', {
+      template: '<h1>Hello</h1>'
+    })
+    const vm = new Vue({
+      el: '#app'
+    });
+  </script>
+</body>
+
+</html>

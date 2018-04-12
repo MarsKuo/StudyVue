@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+</head>
+<body>
+   
+  <div id="counter">
+    <input type="text" v-model="text">
+    <span>{{text}}</span>
+    <hr>
+    <ul>
+      <li v-for="item in items">{{item}}</li>
+    </ul>
+    <button v-on:click="remove">刪除一個li</button>
+    <hr>
+    <h1>{{count}}</h1>
+    <button v-on:click="add">+1</button>
+  </div>
+  <script>
+      new Vue({
+        el: '#counter',
+        data:{
+          text: '',
+          count: 0,
+          items: [1,2,3,4,5],
+        },
+        methods:{
+          add(){
+             this.count += 1;
+          //  alert(thi?s.count);
+          },
+          remove(){
+            this.items.pop();
+          },
+        },
+      });
+    </script>
+ 
+</body>
+</html>

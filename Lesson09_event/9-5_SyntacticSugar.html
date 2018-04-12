@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 26px;
+      font-weight: 600
+    }
+
+    .box {
+      min-width: 80px;
+      min-height: 80px;
+      padding: 40px;
+      border: 2px solid red;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>
+    當要防止氣泡漂浮，使用stop，或者可以使用self，如果不是該元素，就是不允許傳遞
+  </h5>
+  <div id="app">
+
+    <!-- <a href="https://google.com" target="_blank" @click="linkClick">google</a> -->
+    <a href="https://google.com" target="_blank" @click.prevent="linkClick">google</a>
+    <hr>
+
+
+    <div class="box" @click.self="msg='C'">
+      <div class="box" @click.self="msg='B'">
+
+        <!-- 停止氣泡模式 -->
+        <div class="box" @click.self="msg='A'">
+        </div>
+        <!-- 傳統寫法 -->
+        <!-- <div class="box" @click="setA">
+        </div> -->
+      </div>
+    </div>
+
+    <h1>{{msg}}</h1>
+
+
+    <hr>
+    <h4>計數器</h4>
+    <h1>{{count}}</h1>
+    <!-- 只能點一次 -->
+    <button @click.once="count += 1"> +1 </button>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '',
+        count :0,
+      },
+      methods: {
+        // linkClick(evt){
+        //   evt.preventDefault();
+        //   alert("Don't")
+        // }
+        linkClick() {
+          alert("Don't")
+        },
+        setA(evt) {
+          evt.stopPropagation();
+          this.msg = 'A';
+        }
+
+      }
+    });
+  </script>
+</body>
+
+</html>

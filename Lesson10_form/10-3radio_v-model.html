@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+    <input type="radio" id="r1" value="Male" v-model="gender">
+    <label for="r1">Male</label>
+    <input type="radio" id="r2" value="Female" v-model="gender">
+    <label for="r2">Female</label>
+    <input type="radio" id="r3" value="Other" v-model="gender">
+    <label for="r3">Other</label>
+    <h1>{{gender}}</h1>
+
+    <hr>
+    <h4>多選的Radio，不建議</h4>
+    <input type="radio" id="r4" :checked="male" @click="male=!male">
+    <label for="r4">Male</label>
+    <input type="radio" id="r5" :checked="female" @click="female=!female">
+    <label for="r5">Female</label>
+    <input type="radio" id="r6" :checked="other" @click="other=!other">
+    <label for="r6">Other</label>
+    <h1>male：{{male}}</h1>
+    <h1>female：{{female}}</h1>
+    <h1>other：{{other}}</h1>
+
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        gender: 'male',
+        male: false,
+        female: false,
+        other: false,
+      },
+      methods: {
+        submit() {
+          if (this.agree !== true) {
+            alert("Please agree");
+            return;
+          }
+        },
+      }
+    });
+  </script>
+</body>
+
+</html>

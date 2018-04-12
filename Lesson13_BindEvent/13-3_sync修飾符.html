@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h4>如果要偵聽組件的原生事件，要增加修飾符native</h4>
+    <my-counter :outer-count="outerCount" @update="setouterCount"></my-counter>
+    <h1>{{outerCount}}</h1>
+  </div>
+  <script>
+    Vue.component('my-counter', {
+      props: ['outerCount'],
+      data() {
+        return {
+          innerCount: this.outerCount,
+        };
+      },
+      template:
+      `
+        <div>
+          <h1>{{innerCount}}</h1>
+          <button @click="innerCount+=1">+1</button>
+          <button @click="sync">sync</button>
+        </div>
+      `,
+      methods: {
+        sync() {
+          this.$emit('update', this.innerCount);
+        }
+      }
+    })
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        outerCount: 10,
+      },
+      methods: {
+        setouterCount(count) {
+          this.outerCount = count;
+        }
+      }
+    });
+  </script>
+  <hr>
+  <div id="app2">
+    <h4>使用sync，只要指定props加上一個sync，他就會自動綁定事件</h4>
+    <my-counter :outer-count.sync="outerCount"></my-counter>
+    <!-- 等同於 -->
+    <my-counter :outer-count="outerCount" @update:outer-count="val => outerCount = val"></my-counter>
+    <h1>{{outerCount}}</h1>
+  </div>
+  <script>
+    Vue.component('my-counter', {
+      props: ['outerCount'],
+      data() {
+        return {
+          innerCount: this.outerCount,
+        };
+      },
+      template:
+      `
+    <div>
+      <h1>{{innerCount}}</h1>
+      <button @click="innerCount+=1">+1</button>
+      <button @click="sync">sync</button>
+    </div>
+  `,
+      methods: {
+        sync() {
+          this.$emit('update:outerCount', this.innerCount *2);
+          // this.$emit('update', this.innerCount *2);
+        }
+      }
+    })
+
+    const vm2 = new Vue({
+      el: '#app2',
+      data: {
+        outerCount: 10,
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

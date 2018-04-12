@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+      h4,h5,h6{
+        color: #f24
+      }
+
+
+      h2{
+        /* 下這個就能讓換行 */
+        white-space:pre
+      }
+    </style>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="message"><br>
+    v-model等同於下列方法<br>
+    <input type="text" :value="message" @input="setmessage">
+    <h1>{{message}}</h1>
+
+    <hr>    <hr>   
+
+
+    <h4>使用pre(preserves)，可以正確地讓block換行</h4>
+    <textarea v-model="message2"></textarea><br>
+    preserves ： <pre>{{message2}}</pre> 
+    H2:<h2>{{message2}}</h2><br>
+
+    v-model等同於下列方法<br>
+    <textarea @input="setAreaMessage" >{{message2}}</textarea><br>
+
+
+
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+          message: '',
+          message2: '',
+        },
+        methods: {
+          setmessage(evt){
+            this.message=evt.target.value
+          },
+          setAreaMessage(evt){
+            this.message2=evt.target.value
+          }
+        }
+    });
+  </script>
+</body>
+</html>

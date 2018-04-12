@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <input type="text" v-model="input" @keyup="keydown"> -->
+<hr>
+          <!-- 修飾句 -->
+    <!-- <input type="text" v-model="input" placeholder="增加修飾句" @keydown.how="keydown"> -->
+<hr>
+    <!-- 按鍵a的修飾句 -->
+    <input type="text" v-model="input" placeholder="案件a的修飾句" @keydown.a.prevent="keydown">
+    <ul>
+      <li v-for="item in list">{{item}}</li>
+    </ul>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        input: '',
+        list: [],
+      },
+      methods: {
+        keydown(evt){
+          // if(evt.keyCode ===13){
+            this.list.push(this.input);
+            this.input = '';
+          // }
+        },
+      },
+    });
+  </script>
+</body>
+
+</html>

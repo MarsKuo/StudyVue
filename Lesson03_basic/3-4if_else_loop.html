@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- V-if介紹 -->
+    <span v-if="see">Now you see me</span>
+    <span v-else>Now you don't</span>
+
+    <hr>
+    <!-- 跑回圈 -->
+    <div v-for="step in steps">{{step}}</div>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        see: false,
+        steps: [
+          '學javaScript',
+          '學Vue',
+          '年薪百萬'
+        ]
+
+      },
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h4>一般狀況</h4>
+    <input type="text" v-model="msg">
+    <h1>{{msg}}</h1>
+    <hr>
+    <h4>lazy，當焦點喪失，移出該input才會顯示</h4>
+    <input type="text" v-model.lazy="msg">
+    <h1>{{msg}}</h1>
+    <hr>
+    <h4>number，把輸入的字元當作數字，避免被字串相加</h4>
+    <input type="text" v-model.number="num">
+    <h1>{{num + 1}}</h1>
+    <hr>
+    <h4>text，清空前後空白</h4>
+    <input type="text" v-model.trim="text">
+    <h1>[{{text}}]</h1>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '',
+        num: '',
+        text: ''
+      }
+    });
+  </script>
+</body>
+
+</html>

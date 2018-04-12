@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+
+    <span>{{count * 2}}</span>
+    <!-- <input type="checkbox"  checked={{selected}}> -->
+    <button v-on:click="add">數字+1</button>
+    <hr>
+    <!-- v-bind綁定屬性用 -->
+
+    <!-- <input type="checkbox" v-bind:checked=selected> -->
+    <!-- v-bind:checked縮寫:checked -->
+    <input type="checkbox" :checked=selected> 
+    <!-- v-on監聽事件用 -->
+    <!-- <button v-on:mouseover="toggle">Toggle</button> -->
+    <!-- <button v-on:click="toggle">toggle切換狀態</button> -->
+    <button @click="toggle">toggle切換狀態</button>
+
+    <hr>
+    <input type="checkbox" v-bind:checked="count % 2 == 0">
+    <!-- v-on監聽事件用 -->
+    <!-- <button v-on:mouseover="toggle">Toggle</button> -->
+    <button v-on:click="toggle">toggle切換狀態</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        selected: false,
+        count: 0
+      },
+      methods: {
+        toggle() {
+          this.selected = !this.selected;
+        },
+        add() {
+          this.count += 1;
+          console.log(this.count);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

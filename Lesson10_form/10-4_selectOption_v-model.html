@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+    <h4>有設定Value，就抓Value，否則就抓裡面的值</h4>
+    <br>
+    <select v-model="year">
+      <option disabled value="">Select Year</option>
+      <option >2015</option>
+      <option >2016</option>
+      <option >2017</option>
+      <option value="15">2015</option>
+      <option value="16">2016</option>
+      <option value="17">2017</option>
+    </select>
+    <h1>{{year}}</h1>
+    <hr>
+    <h4>使用陣列的方式，複選</h4>
+    <select v-model="year2" multiple>
+        <option disabled value="">Select Year</option>
+        <option >2015</option>
+        <option >2016</option>
+        <option >2017</option>
+        <option value="15">2015</option>
+        <option value="16">2016</option>
+        <option value="17">2017</option>
+      </select>
+    <h1>{{year2}}</h1>
+
+    <hr>
+    <h4>迴圈取值</h4>
+    <select v-model="selectedYear">
+          <option disabled value="">Select Year</option>
+          <option v-for="item in year3" :value="item">{{item}}</option>
+        </select>
+    <h1>{{selectedYear}}</h1>
+
+    <h5>快速設定月份</h5>
+    <select v-model="selectedMonth">
+            <option disabled value="">Select Year</option>
+            <option v-for="month in 12" :value="month">{{month}}</option>
+          </select>
+    <h1>{{selectedMonth}}</h1>
+    <hr>
+    <h4>使用陣列取值</h4>
+
+    <select v-model="selectedGender">
+        <option v-for="option in options" :value="option.value">{{option.text}}</option>
+      </select>
+    <h1>{{selectedGender}}</h1>
+
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        year: '',
+        year2: '',
+        year3: [2015, 2016, 2017],
+        selectedYear: 2015,
+        selectedMonth: '',
+        options: [{ value: 1, text: 'male' }, { value: 2, text: 'female' }, { value: 3, text: 'others' }],
+        selectedGender: 1,
+
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <post textxx="text"></post>
+    <hr>
+    <post v-for="item in posts" :textxx="item"></post>
+  </div>
+
+  <hr>
+  <div id="app2">
+    <post v-for="post in posts" :text="post.text" :author="post.author"></post>
+    <!--快速用法-->
+    <post v-for="post in posts" v-bind="post"></post>
+  </div>
+  <hr>
+  <div id="app3">
+     <count :number="1"></count>
+    </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        text: 'hello',
+        posts: [
+          'hello',
+          'world',
+        ]
+      },
+      components: {
+        post: {
+          props: ['textxx'],
+          template: '<div>{{textxx}}</div>'
+        }
+
+      }
+    });
+  
+    const vm2 = new Vue({
+      el: '#app2',
+      data: {
+        posts: [
+          { text: 'hello', author: 'John' },
+          { text: 'world', author: 'Mars' },
+        ],
+      },
+      components: {
+        post: {
+          props: ['text','author'],
+          template: '<div>{{author}}：{{text}}</div>'
+        }
+      }
+    });
+
+    const vm3 = new Vue({
+      el: '#app3',
+      data: {
+      },
+      components: {
+        count: {
+          props: ['number'],
+          template: '<div>{{number +1 }}</div>'
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

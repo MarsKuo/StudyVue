@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="value">
+    <span>{{valuex2}}</span>
+<br>
+<hr>
+    <input type="text" v-model="inputdata.a">
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+          value:0,
+          inputdata : {
+            a: '',
+          }
+        },
+        methods:{},
+        computed:{
+          valuex2(){
+            return this.value * 2;
+          }
+        },
+        //偵聽
+        watch: {
+          //函式方法
+          valuex2(val,oldVal){
+              // console.log(`valuex2的watch   ${oldVal} -> ${val}`);
+          },
+          //宣告物件的方法
+          value: {
+            handler(val,oldVal){
+              console.log(`value的watch  ${oldVal} -> ${val}`);
+            },
+          },
+          inputdata: {
+            handler(val,oldVal){
+              console.log(val === oldVal );
+              console.log(`inputdata的watch  ${oldVal.a} -> ${val.a}`);
+            },
+            //初始化實例就跑
+            //immediate:true,
+            //偵測物件或是陣列，下deep才能抓到物件裡面的變更，因為inputdata沒變更
+            deep: true
+          }
+        }
+    });
+  </script>
+</body>
+</html>

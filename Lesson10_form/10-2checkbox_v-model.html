@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+      h4,h5,h6{
+        color: #f24
+      }
+
+
+      h2{
+        /* 下這個就能讓換行 */
+        white-space:pre
+      }
+    </style>
+</head>
+<body>
+  <div id="app">
+    
+    <input type="checkbox" id="chk" v-model="agree">
+    <label for="chk">Agree</label>
+    <h1>{{agree}}</h1>
+    <button @click="submit">submit</button>
+
+
+    <hr>
+
+    <input type="checkbox" id="chk1" value="morning"  v-model="times">
+    <label for="chk1">Moring</label>
+    <input type="checkbox" id="chk2"  value="afternoon" v-model="times">
+    <label for="chk2">afternoon</label>
+    <input type="checkbox" id="chk3" value="evening"  v-model="times">
+    <label for="chk3">Evening</label>
+
+<h1>{{times}}</h1>
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+          agree: false,
+          times: [],
+        },
+        methods: {
+          submit(){
+            if(this.agree !== true){
+              alert("Please agree");
+              return;
+            }
+          },
+        }
+    });
+  </script>
+</body>
+</html>

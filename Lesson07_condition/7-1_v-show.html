@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    #app{
+      text-align : center;
+      font-family:Microsoft JhengHei;
+      font-size: 32px;
+      color:red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="checkbox" v-model="checked1" />
+    <h1 v-show="checked1">跳樓大拍賣</h1>
+    
+    <!-- v-show不能用在template，因為他不是HTML元素,不能增加display:none -->
+    <!-- Vue的模板 -->
+    <template v-show="checked1">
+        <h2 >跳樓大拍賣</h1>
+        <h3 >跳樓大拍賣</h1>
+        <h4 >跳樓大拍賣</h1>
+    </template>
+    
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data: {
+          checked1: false,
+          checked2: false
+        }
+    });
+  </script>
+</body>
+</html>

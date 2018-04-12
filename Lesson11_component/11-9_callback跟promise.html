@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>11-9_callback跟promise</h4>
+
+  <div id="app">
+
+  </div>
+
+
+  <script>
+    console.clear();
+
+    //callback function 當資料取回來，呼叫function，並傳入data資料
+    // $.getJSON('https://randomuser.me/api', function (data) {
+    //   console.log(data);
+    // })
+
+    // 等同於下面
+    // $.ajax({
+    //   url:'https://randomuser.me/api',
+    //   dataType: 'json',
+    //   success: function(data){
+    //     console.log(data);
+    //   }
+    // })
+
+    console.log('end');
+
+    function getRandomEmail() {
+      $.getJSON('https://randomuser.me/api', function (data) {
+        //這個function是回傳給getRandomEmail
+        return data.results[0].email;
+      });
+    }
+    //這個方法是用同步跟非同步方法混著寫，會導致非同步還未取得資料，就直接回傳undefined
+    const email = getRandomEmail();
+    console.log(email)
+
+
+    //改成callback function能改善此問題
+    function getRandomEmailbyCallback(callback) {
+      $.getJSON('https://randomuser.me/api', function (data) {
+        //這個function是回傳給getRandomEmail
+        callback(data.results[0].email);
+      });
+    }
+    getRandomEmailbyCallback(function (email) {
+      console.log(email);
+    });
+
+    //!!!!!!!!!!!!!CallbackHell!!!!!!!!!!!!!!!!!
+    // const emails = [];
+    // getRandomEmailbyCallback(function (email) {
+    //   emails.push(email);
+    //   getRandomEmailbyCallback(function (email) {
+    //     emails.push(email);
+    //     getRandomEmailbyCallback(function (email) {
+    //       emails.push(email);
+    //       console.log(emails);
+    //     });
+    //   });
+    // });
+
+
+    //========================================================================
+    //解決callbackHell，所以有了promise
+    const emails = [];
+    function getRandomEmailbyPromise() {
+      return new Promise(function (resolve, reject) {
+        $.getJSON('https://randomuser.me/api', function (data) {
+          resolve(data.results[0].email);
+        });
+      })
+    }
+
+    getRandomEmailbyPromise()
+    .then(function(email){
+      emails.push(email);
+      return getRandomEmailbyPromise();
+    })
+    .then(function(email){
+      emails.push(email);
+      return getRandomEmailbyPromise();
+    })
+    .then(function(email){
+      emails.push(email);
+      console.log(emails)
+    })
+
+
+    //ES8 出現 async  /await
+    const emails2 = [];
+    async function getEamils(){
+      let email;
+      email = await getRandomEmailbyPromise();
+      emails2.push(email);
+      email = await getRandomEmailbyPromise();
+      emails2.push(email);
+      email = await getRandomEmailbyPromise();
+      emails2.push(email);
+      console.log(emails);
+    }
+    getEamils();
+  </script>
+</body>
+
+</html>

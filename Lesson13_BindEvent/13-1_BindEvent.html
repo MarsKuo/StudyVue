@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <my-button @my-newclick="clicked"></my-button>
+  </div>
+  <script>
+    Vue.component('my-button', {
+      template: '<button @click="myClick">my-button</button>',
+      methods: {
+        myClick() {
+          //往上層發出一個function
+          this.$emit('my-newclick', 100, 200);
+        },
+      }
+    })
+    const vm = new Vue({
+      el: '#app',
+      methods: {
+        clicked(num, ) {
+          alert(num);
+        },
+      },
+    });
+  </script>
+
+
+
+
+  <hr>
+  <h4>APP2</h4>
+  <div id="app2">
+    <my-counter @count-emit="countEmit"></my-counter>
+    <h1>{{count}}</h1>
+  </div>
+  <script>
+    Vue.component('my-counter', {
+      template: 
+      `
+        <div>
+          <h1>{{count}}</h1>
+          <button @click="count+=1">+1</button>
+          <button @click="emit">emit</button>
+        </div>
+      `,
+      data(){
+        return {
+          count:0,
+        }
+      },
+      methods: {
+        emit() {
+          //往上層發出一個function
+          this.$emit('count-emit', this.count);
+        },
+      }
+
+    })
+    const vm2 = new Vue({
+      el: '#app2',
+      data:{
+        count:0,
+      },
+      methods: {
+        countEmit(count ) {
+          this.count = count;
+        },
+      },
+    });
+  </script>
+
+
+</body>
+
+</html>

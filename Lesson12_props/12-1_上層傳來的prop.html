@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h4>在html不能使用camelCase或是PascalCase</h4>
+    <h4>如果在props裡面命名camelCase就必須在HTML使用kebab-case(加dash那種)</h4>
+    <my-component my-message="hello" test="測試"></my-component>
+  </div>
+  <hr>
+  <h4>使用template的方式，用字串模板無此限制，不需要經過瀏覽器解析，所以在組件內使用camelCase</h4>
+  <div id="app2">
+
+    <my-componentbytemppale></my-componentbytemppale>
+  </div>
+  <script>
+    Vue.component('my-component', {
+      props: ['myMessage', 'test'],
+      template: '<h1>{{myMessage}}{{test}}</h1>',
+    })
+
+    const vm = new Vue({
+      el: '#app',
+    });
+
+    //使用template的方式，用字串模板無此限制，不需要經過瀏覽器解析，所以在組件內使用camelCase
+    Vue.component('my-componentbytemppale', {
+      props: ['myMessage', 'test'],
+      template:
+      `
+       <h1>{{myMessage}}</h1>
+      `,
+    });
+
+
+
+    const vm2 = new Vue({
+      el: '#app2',
+      template: ` <div>
+          <my-componentbytemppale myMessage="helloWorld"></my-componentbytemppale>
+        </div>`
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+
+  <h4>方法1，用原生的click方法，給父層值再傳回去子層</h4>
+  <h4>方法2，由Vuex統一管理狀態</h4>
+  <h4>方法3，event Bus</h4>
+
+  <div id="app">
+    <my-count :count="count"></my-count>
+    <my-button @click.native="count+=1"></my-button>
+  </div>
+  <script>
+    Vue.component('my-count', {
+      props: ['count'],
+      template: '<h1>{{count}}</h1>'
+    })
+    Vue.component('my-button', {
+      template: '<button>+1</button>'
+    })
+
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        count: 0,
+      }
+    });
+  </script>
+  <hr>
+
+  <h4>event Bus</h4>
+
+  <div id="app2">
+    <my-count></my-count>
+    <my-button></my-button>
+  </div>
+  <script>
+    const bus = new Vue();
+    Vue.component('my-count', {
+      data() {
+        return {
+          count: 0,
+        }
+      },
+      template: '<h1>{{count}}</h1>',
+      mounted() {
+        bus.$on('add', () => {
+          this.count += 1;
+        });
+      },
+    })
+    Vue.component('my-button', {
+      template: '<button @click="click">+1</button>',
+      methods: {
+        click() {
+          bus.$emit('add');
+        },
+      }
+    })
+
+
+    const vm2 = new Vue({
+      el: '#app2',
+      data: {
+        count: 0,
+      }
+    });
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>使用axios做會員登入</h4>
+
+  <div id="app">
+    <login-form></login-form>
+
+    <hr>
+
+    <user-check></user-check>
+
+    <hr>
+    <h4>不需要button直接call API</h4>
+    <user-check2></user-check2>
+    <hr>
+
+    <h4>動態切換component</h4>
+    <div>
+      <button @click="component='login-form'">Login Form</button>
+      <button @click="component='user-check'">Login Form</button>
+    </div>
+    <keep-alive>
+      <component :is="component"></component>
+    </keep-alive>
+
+  </div>
+
+
+  <script>
+    const API = 'http://localhost:8081';
+
+    Vue.component('user-check2', {
+      data() {
+        return {
+          username: '',
+          exists: false,
+        }
+      },
+      methods: {
+        submit() {
+          axios.get(`${API}/exists/${this.username}`)
+            .then(response => {
+              this.exists = response.data.exists;
+            })
+        }
+      },
+      watch: {
+        username() {
+          //this.submit();
+          this.submitDebounced();
+        }
+      },
+      created() {
+        //這個方法可以延後執行,利用watch來監聽輸入
+        this.submitDebounced = _.debounce(this.submit, 2000);
+      },
+      template:
+      `
+        <div>
+          <lable>Username</lable>
+          <input type="text" v-model="username">
+          <br>
+          <span>{{exists}}</span>
+        </div>
+      `
+    })
+
+    Vue.component('user-check', {
+      data() {
+        return {
+          username: '',
+          exists: false,
+        }
+      },
+      methods: {
+        submit() {
+          axios.get(`${API}/exists/${this.username}`)
+            .then(response => {
+              this.exists = response.data.exists;
+            })
+        }
+      },
+      template:
+      `
+        <div>
+          <lable>Username</lable>
+          <input type="text" v-model="username">
+          <br>
+          <button @click="submit">Submit</button>
+          <br>
+          <span>{{exists}}</span>
+        </div>
+      `
+    })
+
+
+    Vue.component('login-form', {
+      data() {
+        return {
+          username: '',
+          password: '',
+          loggedUser: null,
+          error: '',
+          loading: false
+        }
+      },
+      methods: {
+        submit() {
+          this.loading = true;
+          setTimeout(this.getData, 4000);
+
+        },
+        getData() {
+          axios.post(`${API}/login`, {
+            username: this.username,
+            password: this.password,
+          }).then(response => {
+            this.loading = false;
+            if (response.data.success) {
+              this.loggedUser = response.data.name
+            }
+            else {
+              this.error = 'Incorrect username/password';
+            }
+          })
+        }
+      },
+      watch: {
+        username() {
+          this.error = '';
+        }, password() {
+          this.error = '';
+        },
+      },
+      template: `
+      <div>
+        <h1 v-if="loggedUser">Welcome !  {{loggedUser}}</h1>
+        <form v-else  @submit.prevent="submit">
+          <label >UserName</label>
+          <input type="text" v-model="username" :disabled = "loading">
+          <br>
+          <label >Password</label>
+          <input type="Password" v-model="password" :disabled = "loading">
+          <br>
+          <button type="submit" :disabled = "loading">Submit</button>
+          <br>
+          <span v-if="error">{{error}}</span>
+        </form>
+      </div>
+      `
+    });
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        component: 'login-form'
+      }
+    });
+  </script>
+</body>
+
+</html>

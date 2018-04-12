@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+      h4,h5,h6{
+        color: #f24
+      }
+    </style>
+</head>
+<body>
+  <div id="app">
+    <!-- <h1></h1>
+    <hr>
+    <h1></h1>
+    <hr>
+    <h1></h1> -->
+    <tempate v-for="header in headers">
+      <h1>{{header}}</h1>
+      <hr>
+    </tempate>
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+          headers: ['About','Products','Contact']
+        }
+    });
+  </script>
+</body>
+</html>

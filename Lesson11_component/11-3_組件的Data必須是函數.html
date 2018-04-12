@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>實例的data，是物件</h4>
+  <div id="app">
+    <h1>{{count}}</h1>
+    <button @click="count += 1">+1</button>
+  </div>
+
+  <hr>
+
+  <h4>組件的data一定是函式，因為不同的組件，會創立不同的data，閉包(Closure)</h4>
+  <div id="app2">
+      <counter></counter>
+      <counter></counter>
+    </div>
+
+
+    <hr>
+      <h4>不使用閉包(Closure)，建立相同的data，會導致錯亂</h4>
+      <div id="app3">
+          <counter2></counter2>
+          <counter2></counter2>
+        </div>
+  <script>
+    
+    Vue.component('counter',{
+      data(){
+        return{
+          count: 0,
+        }
+      },
+      template: `<div >
+    <h1>{{count}}</h1>
+    <button @click="count += 1">+1</button>
+  </div>`,
+    })
+
+
+  const countData = {count: 0};
+    Vue.component('counter2',{
+      data(){
+        return countData;
+      },
+      template: `<div >
+    <h1>{{count}}</h1>
+    <button @click="count += 1">+1</button>
+  </div>`,
+    })
+
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        count: 0,
+      }
+    });
+
+
+    new Vue({
+      el: '#app2'
+    });
+    
+    new Vue({
+      el: '#app3'
+    });
+  </script>
+</body>
+
+</html>

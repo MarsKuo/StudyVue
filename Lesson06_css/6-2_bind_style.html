@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    #app,
+    #app2,
+    #app3 {
+      text-align: center;
+    }
+    /* h1{
+      color : red
+    } */
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Style可以是字串 -->
+    <h1 v-bind:style="h1Style1">Valar Morghulis</h1>
+    <!-- Style可以是物件 -->
+    <h1 v-bind:style="h1Style2">Valar Morghulis</h1>
+    <!-- Style可以是陣列，但是陣列裡面物件 -->
+    <h1 v-bind:style="h1Style3">Valar Morghulis</h1>
+  </div>
+  <hr>
+  <div id="app2">
+    <h1>使用methods來控制Button縮寫FontSize</h1>
+    <h1 v-bind:style="h1Style">Valar Morghulis</h1>
+    <button v-on:click="shrink">OK</button>
+  </div>
+  <hr>
+  <div id="app3">
+    <h1>使用computed來控制Button縮寫FontSize</h1>
+    <h1 v-bind:style="h1Style">Valar Morghulis</h1>
+    <button v-on:click="shrink">OK</button>
+  </div>
+  <script>
+    // 在JS裡面定義Style一定藥用Camel-Case(駝峰式)
+    const commonHeadStyle = { fontSize: '20px' };
+    const greenWord = { color: 'green' };
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        h1Style1: 'color:red',
+        h1Style2: { color: 'pink' },
+        h1Style3: [commonHeadStyle, greenWord]
+      }
+    });
+    //使用methods來控制Button縮寫FontSize
+    const vm2 = new Vue({
+      el: '#app2',
+      data: {
+        h1Style: {
+          fontSize: '40px',
+          color: '#f24'
+        }
+      },
+      methods: {
+        shrink() {
+          const size = parseInt(this.h1Style.fontSize.replace('px'), 10);
+          this.h1Style.fontSize = `${size - 1}px`;
+        }
+      }
+    });
+
+    //使用computed來控制Button縮寫FontSize
+    const vm3 = new Vue({
+      el: '#app3',
+      data: {
+          size: 40,
+      },
+      computed: {
+        h1Style() {
+          return {
+            fontSize: `${this.size}px`,
+            color: 'blue'
+          }
+        }
+      },
+      methods: {
+        shrink() {
+          this.size --;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

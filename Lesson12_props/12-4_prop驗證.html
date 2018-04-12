@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+
+  <h4>prop的檢核，因為他在組件建立之前，所以裡面不會有this.data等等</h4>
+  <div id="app">
+      <counter :start="11" ></counter>
+  </div>
+  
+  <script>
+
+    Vue.component('counter',{
+      // props: ['start'],
+      // props: {start:Number}
+      // props: {
+      //   start: {
+      //     type:Number,
+      //     default: 0,
+      //     validator(value){
+      //       return value <=10;
+      //     }
+      //   }
+      // },
+      props: {
+        start: {
+          type:Number,
+          default(){
+            return app.getSetting();
+            },
+          validator(value){
+            return value <=10;
+          }
+        }
+      },
+      data(){
+        return{
+          count: this.start,
+        }
+      },
+      template:
+      `
+        <div>
+          <h1>{{count}}</h1>
+          <button @click="count+=1">+</button>
+        </div>
+      `,
+    })
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        count: 10,
+      }
+    });
+
+    
+  </script>
+</body>
+
+</html>

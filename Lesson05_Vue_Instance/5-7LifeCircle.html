@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const vm = new Vue({
+      beforeCreate() { },
+      created() { },
+      //上面唯二是server side rendering
+      beforeMount() { },
+      mounted() { 
+        // 初始AJAX通常放這
+        // $.ajax({
+        //   success: (data)=>{
+        //     this.list = data.list
+        //   }
+        // })
+        //偵聽Windows事件
+      },
+      beforeupdate() {
+        //檢查更新前後資料
+       },
+      updated() { },
+      beforeDestroy() { },
+      destroyed() {
+        //通常是用在移除windows偵聽
+       }
+    });
+  </script>
+</body>
+
+</html>

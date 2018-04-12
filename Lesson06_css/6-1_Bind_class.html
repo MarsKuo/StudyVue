@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+      #app,#app2,h1{
+        text-align: center;
+      }
+      .submit{
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 8px;
+      }
+      .submit.disabled{
+        background-color: #aaa;
+      }
+    </style>
+</head>
+<body>
+  
+  <!-- 綁定屬性，可以是字串 -->
+  
+  <div id="app">
+      <h1>綁定屬性，可以是字串</h1>
+    <input type="text" v-model="text">
+    <button v-bind:class="btnClass">Submit</button>
+<hr>
+<!-- 綁定屬性，可以是物件 -->
+<h1>綁定屬性，可以是物件</h1>
+    <input type="text" v-model="text">
+    <button v-bind:class="btnClass2">Submit</button>
+  
+  <!-- 綁定屬性，可以是陣列 -->
+
+  <hr>
+</div>
+
+  <div id="app2">
+      <h1>綁定屬性，可以是陣列</h1>
+    <input type="text" v-model="text">
+    <button v-bind:class="btnClass3">Submit</button>
+  </div>
+
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+          text:'',
+        },
+        computed:{
+          btnClass(){
+            if(this.text.length ===0){
+              return 'submit disabled';
+            }else{
+              return 'submit';
+            }
+          },
+          btnClass2(){
+            // if(this.text.length ===0){
+            //   return {
+            //     submit:true,
+            //     disabled:true,
+            //   };
+            // }else{
+            //   return {
+            //     submit:true,
+            //     disabled:false,
+            //   };
+            // }
+            // 進階用法
+            return {
+              submit:true,
+              disabled: this.text.length ===0,
+            }
+          },
+        }
+    });
+    const vm2 = new Vue({
+        el:'#app2',
+        data:{
+          text:'',
+          btnClass3: ['submit','disabled']
+        }
+    });
+  </script>
+</body>
+</html>

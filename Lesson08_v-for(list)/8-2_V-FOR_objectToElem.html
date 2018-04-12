@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24
+    }
+  </style>
+</head>
+
+<body>
+  <h1>用V-FOR轉換物件</h1>
+  <h5 color>*****轉換物件，不能保證物件的順序，除非使用陣列</h5>
+  <div id="app">
+    <div v-for="value in me">{{value}}</div>
+
+    <hr>
+
+    <h3>增加index</h3>
+    <div v-for="(value,key) in me">{{key}} - {{value}}</div>
+
+    <hr>
+    <h4>改成陣列，才可以依照我要的順序排列</h4>
+    <div v-for="item in me2">{{item.prop}} - {{item.value}}</div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        me: {
+          name: '郭信鼎',
+          id: 'mars',
+          age: 33,
+          password: '1234567',
+          13: '大學畢業',
+          9: '訂婚',
+          4: '新創公司',
+        },
+        me2: [
+          {prop: 'name',value:'郭信鼎'},
+          {prop: 'id',value:'Mars'},
+          {prop: 8,value:'訂婚'},
+          {prop: 4,value:'創辦公司'},
+
+        ]
+      }
+    });
+  </script>
+</body>
+
+</html>

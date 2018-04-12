@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+      h4,h5,h6{
+        color: #f24
+      }
+    </style>
+</head>
+<body>
+
+  <h1>備註</h1>
+  <h5>備註：直接定義陣列的值，或是直接更改陣列的長度，Vue無法順利render</h5>
+
+  <div id="app">
+      <button @click="action" >Ya，增加一個</button>
+      <button @click="deleteAction" >Ya，減少一個</button>
+      <button @click="RenderAction" >Vue無法正確Render</button>
+      <button @click="RenderArrayAction" >Vue無法正確Render，陣列變更</button>
+    <ul>
+      <li v-for="num in nums">{{num}}</li>
+    </ul>
+    
+
+    <hr>
+    <ul>
+        <li v-for="num in objNums">{{num}}</li>
+      </ul>
+  </div>
+  <script>
+    const vm = new Vue({
+        el:'#app',
+        data: {
+            nums:[1,2,3,4,5,6,7,8,9,10],
+            objNums:{
+              x:10,
+              y:20,
+            }
+        },
+        methods:{
+          action(){
+            //從後面塞一個
+            // this.nums.push(this.nums.length +1)
+            //從後面跑一個出來
+            // this.nums.pop();
+            //從前面跑一個出來
+            // this.nums.shift();
+            //從前面塞一個近來
+            // this.nums.unshift(0);
+            //刪除特定的元素
+            // this.nums.splice(idx,length)
+            //刪除第三個開始，第一個元素，並插入9,8,7三個元素
+            //  this.nums.splice(2,1,9,8,7);
+            //反轉陣列
+            // this.nums.reverse();
+            //過濾陣列，並產出新陣列
+            this.nums = this.nums.filter(elm => elm % 2 ===0);
+          },
+          deleteAction(){
+            this.nums.pop();
+          },
+          //陣列變更
+          RenderAction(){
+            //直接定義陣列的值，Vue無法順利render
+            //this.nums[0] = 10;
+            //但是使用splice，就可以直接讓Vue正確的Render畫面，從0開始，後面第一個變更
+            // this.nums.splice(0,1,10)
+
+            //直接更改陣列的長度，Vue無法順利render
+            // this.nums.length = 3;
+            //從index3開始往後刪除
+            this.nums.splice(3)
+            //從index1開始刪除3個
+            this.nums.splice(1,3)
+          },
+          //物件變更
+          RenderArrayAction(){
+              //無效果
+              //this.objNums.z = 30;
+              //但是可以透過this.$set來設定
+              //this.$set(this.objNums,'z',30);
+              //或使用Vue.set
+              //Vue.set(this.objNums,'z',30);
+              //但是修改原本就有的值就可以直接設定，反之則要透過this.$set
+              this.objNums.x=50;
+          }
+
+        }
+    });
+  </script>
+</body>
+</html>

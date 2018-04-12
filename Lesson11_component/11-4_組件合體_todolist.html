@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>實例的data，是物件</h4>
+  <div id="app">
+    <todo-list></todo-list>
+  </div>
+
+  <hr>
+
+
+  <script>
+    Vue.component('todo-item', {
+      props: ['label'],
+      template: `
+      <li>{{label}}</li>
+      `,
+    })
+
+    Vue.component('todo-input', {
+      data() {
+        return {
+          text: '',
+        }
+      },
+      methods: {
+        submit() {
+          //發出一個事件
+          this.$emit('input', this.text);
+          this.text = '';
+        },
+      },
+      template: `
+      <form @submit.prevent="submit">
+        <input type="text" v-model="text">
+        <button type="submit">Submit</button>
+      </form>`,
+    })
+
+
+    Vue.component('todo-list', {
+      data() {
+        return {
+          todos: ['a', 'b', 'c'],
+        }
+      },
+      methods: {
+        addTodo(text) {
+          this.todos.push(text);
+        },
+      },
+      //@input等於接收事件，接收todo-input發來的事件
+      template: `<div >
+      
+   <todo-input @input="addTodo"></todo-input>
+   <ul>
+      <todo-item v-for="todo in todos" :label="todo"></todo-item>
+   </ul>
+  </div>`,
+    })
+
+
+
+    const vm = new Vue({
+      el: '#app',
+
+    });
+  </script>
+</body>
+
+</html>

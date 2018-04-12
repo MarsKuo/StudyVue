@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h4> VueComponent一定要在newVue之前</h4>
+
+    <h4>Global component</h4>
+    <my-component></my-component>
+  </div>
+
+  <hr>
+
+  <div id="app2">
+    <h4> Local Component</h4>
+    <my-component2></my-component2>
+  </div>
+  <script>
+    //Global component 註冊在全域，大家都能使用
+    Vue.component('my-component', {
+      template: '<div>MyGlobalComponent</div>',
+
+    })
+    const vm = new Vue({
+      el: '#app',
+    });
+
+    //Local Component 註冊在Vue實例內
+    const v2 = new Vue({
+      el: '#app2',
+      components: {
+        'my-component2': {
+          template: '<div>MyLocalComponent</div>',
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

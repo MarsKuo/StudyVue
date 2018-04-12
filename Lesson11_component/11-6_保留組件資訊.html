@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>動態組件</h4>
+  <div id="app">
+   <button @click="content='lessons'">lessons</button>
+   <button @click="content='apply'">Apply</button>
+   <keep-alive>
+    <component :is="content"></component>
+   </keep-alive>
+
+  </div>
+
+  
+  <script>
+    
+    Vue.component('lessons',{
+      template: `
+     <ul>
+       <li>Vue</li>
+       <li>React</li>
+       <li>Angular</li>
+     </ul>
+      `,
+    })
+
+    Vue.component('apply',{
+      template: `<form>
+   <textarea ></textarea>
+   <button>Submit</button>
+  </form>`,
+    })
+
+
+    const vm = new Vue({
+      el: '#app',
+        data:{content:'lessons'}
+    });
+
+
+  </script>
+</body>
+
+</html>

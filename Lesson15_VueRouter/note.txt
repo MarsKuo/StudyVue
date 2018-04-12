@@ -1,0 +1,5 @@
+1.Script、template、Style都寫在同一個檔案內：單一檔案組件
+2.解決CSS困境的scoped style
+  * global scope => CSS都是全域
+  * collision => 避免撞名
+  * specificity => 權重

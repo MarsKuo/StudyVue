@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.5/vue.min.js"></script>
+  <style>
+    h4,
+    h5,
+    h6 {
+      color: #f24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+      <h4>此方法會因為流覽器不同，導致my-component被判定為不合法tag導致出現不了，可使用LocalComponent避免此問題</h4>
+      <select >
+        <my-component/>
+      </select>
+  </div>
+
+  <hr>
+
+  <div id="app2">
+      <h4>此方法會因為流覽器不同，導致my-component被判定為不合法tag導致出現不了，可使用LocalComponent避免此問題</h4>
+      <select >
+        <my-component/>
+      </select>
+  </div>
+  <script>
+    
+    Vue.component('my-component', {
+      template: '<option>Hello</option>',
+    });
+    const vm = new Vue({
+      el: '#app',
+    });
+
+
+    const vm2 = new Vue({
+      el: '#app2',
+      template: '<div id="app2"><select >        <my-component/>      </select>  </div>',
+    });
+  </script>
+</body>
+
+</html>
