@@ -1,14 +1,6 @@
 <template>
   <div>
     <span>{{connected}}</span>
-    <button v-if="!connected" @click="connect">Connect</button>
-    <div v-else>
-      <h4 >
-            {{username}}
-      </h4>
-      <img :src="picture" alt="">
-    </div>
-
   </div>
 </template>
 
@@ -31,22 +23,21 @@ export default {
       // this.connected = result.status === "connected";
       if (result.status === "connected") {
         this.connected = true;
-        // FB.api('/me',rs =>{
-        //   this.username = rs.name;
-        //   console.log(rs);
-        // })
-        FB.api(
-          "/me",
-          "GET",
-          {
-            fields: ["picture", "name"]
-          },
-          rs => {
-            this.username = rs.name;
-            this.picture = rs.picture.data.url;
-          }
-        );
+        this.getAlbum();
       }
+    },
+    getAlbum() {
+      FB.api("/738251022885507/photos", {
+         fields: ["picture","name"]
+         }, result => {
+           console.log(result);
+       var data =  result.data.map(item => item.picture);
+        console.log(data);
+      });
+
+      // FB.api("/738251022885507/photos", result => {
+      //   console.log(result);
+      // });
     }
   },
   mounted() {
